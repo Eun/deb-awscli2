@@ -1,0 +1,52 @@
+on:
+  schedule:
+    - cron: '40 15 18 * *'
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: version to deploy
+        required: false
+        default: "latest"
+name: "release"
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@v2.4.0
+      -
+        name: Import GPG Key
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+      -
+        name: Build deb
+        shell: bash
+        env:
+          DEFAULT_VERSION: 'latest'
+        run: |
+          ./make-deb.sh ${{ github.event.inputs.version || env.DEFAULT_VERSION }} amd64
+          ./make-deb.sh ${{ github.event.inputs.version || env.DEFAULT_VERSION }} arm64
+      -
+        name: Updating repo
+        shell: bash
+        run: |
+          gpg --armor --export "${{ secrets.GPG_KEY_ID }}" > key.gpg
+          dpkg-scanpackages --multiversion . > Packages
+          gzip -k -f Packages
+          apt-ftparchive release . > Release
+          gpg --default-key "${{ secrets.GPG_KEY_ID }}" -abs -o - Release > Release.gpg
+          gpg --default-key "${{ secrets.GPG_KEY_ID }}" --clearsign -o - Release > InRelease
+          
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "" --allow-empty-message
+      -
+        name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.event.repository.master_branch }}
