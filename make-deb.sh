@@ -36,6 +36,14 @@ case $ARCH in
   ;;
 esac
 
+DEB_FILE="awscli2_${VERSION}_${ARCH}.deb"
+
+# test if already exists
+if [ -e "$DEB_FILE" ]; then
+    echo "'$DEB_FILE' already exists"
+    exit 1
+fi
+
 
 TMPDIR=$(mktemp -d)
 
