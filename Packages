@@ -1019,6 +1019,36 @@ Homepage: https://github.com/Eun/deb-awscli2
 Description: unofficial aws cli v2
 
 Package: awscli2
+Version: 2.33.0
+Architecture: amd64
+Maintainer: Tobias Salzmann
+Installed-Size: 102841
+Filename: ./awscli2_2.33.0_amd64.deb
+Size: 50286246
+MD5sum: c50cd358bc9f219af40b0e2f296f15de
+SHA1: 9370b86149a928bb023a3413607c0d2feb5d7d7e
+SHA256: b5a7317e39fa5e608afe47b129e96c494797a03afec19176d158e50c9aadc87c
+Section: admin
+Priority: optional
+Homepage: https://github.com/Eun/deb-awscli2
+Description: unofficial aws cli v2
+
+Package: awscli2
+Version: 2.33.0
+Architecture: arm64
+Maintainer: Tobias Salzmann
+Installed-Size: 102841
+Filename: ./awscli2_2.33.0_arm64.deb
+Size: 48004340
+MD5sum: 0f1ab78020b635e8d7f2ce31c50c258c
+SHA1: 9872a879be651f5042a8034fb9e431e609595b83
+SHA256: ce68fe2583f06177892dd4c8a6fdb277dbeed0d3e3a2306571ef3614ba263097
+Section: admin
+Priority: optional
+Homepage: https://github.com/Eun/deb-awscli2
+Description: unofficial aws cli v2
+
+Package: awscli2
 Version: 2.4.10
 Architecture: amd64
 Maintainer: Tobias Salzmann
